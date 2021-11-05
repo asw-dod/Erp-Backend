@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace erp_system_backend
+namespace ErpBackend
 {
     public class WeatherForecast
     {

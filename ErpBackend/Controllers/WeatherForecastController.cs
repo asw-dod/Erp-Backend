@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace erp_system_backend.Controllers
+namespace ErpBackend.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    //[Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -23,9 +23,10 @@ namespace erp_system_backend.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet("/")]
         public IEnumerable<WeatherForecast> Get()
         {
+            Request.T
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

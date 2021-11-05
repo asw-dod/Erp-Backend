@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>erp_system_backend</RootNamespace>
+    <RootNamespace>ErpBackend</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'erp_system_backend' " />
 </Project>
