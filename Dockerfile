@@ -6,12 +6,12 @@ WORKDIR /source
 COPY ./ ./webapp
 WORKDIR /source/webapp
 RUN dotnet restore
-RUN dotnet publish -c release -o /app --no-restore
+RUN dotnet publish -c release -o ./app "ErpBackend/ErpBackend.csproj" --no-restore 
 
 # runs it using aspnet runtime
 #FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
-FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim AS base
-WORKDIR /app
-COPY --from=build /app ./
-EXPOSE 80
-ENTRYPOINT ["dotnet", "erp-system-backend.dll"]
+# FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim AS base
+# WORKDIR /app
+# COPY --from=build ./app ./
+# EXPOSE 80
+# ENTRYPOINT ["dotnet", "erp-system-backend.dll"]
