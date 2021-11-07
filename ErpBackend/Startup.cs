@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using ErpBackend.Models;
 
 namespace ErpBackend
 {
@@ -27,8 +29,22 @@ namespace ErpBackend
         public void ConfigureServices(IServiceCollection services)
         {
 
+
+            // Replace with your connection string.
+            var connectionString = "Server=127.0.0.1;Port=6000;Database=erp;User=root;Password=test1234;sslMode=None;";
+
+            // Replace with your server version and type.
+            // Use 'MariaDbServerVersion' for MariaDB.
+            // Alternatively, use 'ServerVersion.AutoDetect(connectionString)'.
+            // For common usages, see pull request #1233.
+            var serverVersion = new MySqlServerVersion(new Version(8, 0, 26));
+
+            services.AddDbContext<TodoContext>(option => option.UseMySql(connectionString, serverVersion));
+
+
             services.AddControllers();
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -37,7 +53,19 @@ namespace ErpBackend
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            else
+            {
+                app.UseExceptionHandler("/error");
+                app.Use(async (context, next) =>
+                {
+                    await next();
+                    if (context.Response.StatusCode == 404)
+                    {
+                        context.Request.Path = "/error";
+                        await next();
+                    }
+                });
+            }
 
             app.UseRouting();
             app.UseAuthorization();

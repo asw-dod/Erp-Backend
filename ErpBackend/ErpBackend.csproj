@@ -5,4 +5,16 @@
     <UserSecretsId>aspnet-ErpBackend-A26759F5-B1B6-47DE-BF0D-D92D1C103234</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Controllers\devices\" />
+    <None Remove="Pomelo.EntityFrameworkCore.MySql" />
+    <None Remove="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\Devices\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.2" />
+  </ItemGroup>
 </Project>
