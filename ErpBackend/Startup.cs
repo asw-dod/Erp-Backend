@@ -39,7 +39,7 @@ namespace ErpBackend
             // For common usages, see pull request #1233.
             var serverVersion = new MySqlServerVersion(new Version(8, 0, 26));
 
-            services.AddDbContext<TodoContext>(option => option.UseMySql(connectionString, serverVersion));
+            services.AddDbContext<ErpContext>(option => option.UseMySql(connectionString, serverVersion));
 
 
             services.AddControllers();
