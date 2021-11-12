@@ -12,12 +12,16 @@
     <None Remove="Controllers\Users\" />
     <None Remove="Controllers\Resources\" />
     <None Remove="JWT" />
+    <None Remove="Repository\" />
+    <None Remove="Repository\Interface\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\Devices\" />
     <Folder Include="Models\" />
     <Folder Include="Controllers\Users\" />
     <Folder Include="Controllers\Resources\" />
+    <Folder Include="Repository\" />
+    <Folder Include="Repository\Interface\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.2" />
