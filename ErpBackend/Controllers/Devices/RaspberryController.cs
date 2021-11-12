@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ErpBackend.Models;
+using ErpBackend.Repository;
+using ErpBackend.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -12,20 +14,22 @@ namespace ErpBackend.Controllers.Devices
     public class RaspberryController : Controller
     {
 
-        private readonly ErpContext _context;
+        private readonly IRepository<RaspberryModel, int> repository;
         private readonly ILogger<RaspberryController> _logger;
+
 
         public RaspberryController(ILogger<RaspberryController> logger, ErpContext context)
         {
-            _context = context;
-            _logger = logger;
+            this.repository = new RaspberryRepository(context);
+            this._logger = logger;
         }
+
 
         [HttpGet("/devices/raspberry")]
         public IEnumerable<RaspberryModel> Get()
         {
             _logger.Log(LogLevel.Trace, "hgahaha");
-            return _context.Raspberry.ToArray();
+            return repository.Get().ToArray();
         }
 
         [HttpPut("/devices/raspberry/{id}")]
@@ -40,6 +44,7 @@ namespace ErpBackend.Controllers.Devices
         [HttpPost("/devices/raspberry")]
         public IActionResult eeeee(string json)
         {
+            //Request.BodyReader.
             return Json(new
             {
                 result = json
@@ -52,12 +57,7 @@ namespace ErpBackend.Controllers.Devices
         {
             if (int.TryParse(id, out int num))
             {
-                var elem = _context.Raspberry.Where(item => item.id == num)
-                    .FirstOrDefault();
-
-                if (elem != null) {
-                    _context.Raspberry.Remove(elem);
-                    _context.SaveChanges();
+                if (repository.Delete(num) == true) {
 
                     return Json(new
                     {
