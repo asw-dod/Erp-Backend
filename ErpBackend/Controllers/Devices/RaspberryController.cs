@@ -12,35 +12,38 @@ using Microsoft.Extensions.Logging;
 namespace ErpBackend.Controllers.Devices
 {
     [ApiController]
-    public class RaspberryController : Controller
+    [Route("/devices/raspberry")]
+    public partial class RaspberryController : Controller
     {
 
         private readonly IRepository<RaspberryModel, int> repository;
+        private readonly IRepository<ArduinoModel, int> arduinoRepository;
         private readonly ILogger<RaspberryController> _logger;
 
 
         public RaspberryController(ILogger<RaspberryController> logger, ErpContext context)
         {
             this.repository = new RaspberryRepository(context);
+            //this.arduinoRepository = new ArduinoRepository(context);
             this._logger = logger;
         }
 
 
-        [HttpGet("/devices/raspberry")]
+        [HttpGet()]
         public IEnumerable<RaspberryModel> Get()
         {
             _logger.Log(LogLevel.Trace, "hgahaha");
             return repository.Get().ToArray();
         }
 
-        [HttpGet("/devices/raspberry/{id}")]
+        [HttpGet("{id}")]
         public RaspberryModel Get(string id)
         {
             _logger.Log(LogLevel.Trace, "hgahaha");
             return repository.Get().FirstOrDefault(data => data.Uuid == id) ?? new RaspberryModel();
         }
 
-        [HttpPost("/devices/raspberry")]
+        [HttpPost()]
         public IActionResult eeeee([FromBody] JsonDocument json)
         {
             return Json(new
@@ -49,8 +52,8 @@ namespace ErpBackend.Controllers.Devices
             });
         }
 
-        [HttpPut("/devices/raspberry/{id}")]
-        public IActionResult Post([FromBody] JsonDocument json, string id)
+        [HttpPut("{id}")]
+        public IActionResult PostRaspberry([FromBody] JsonDocument json, string id)
         {
             return Json(new
             {
@@ -58,7 +61,7 @@ namespace ErpBackend.Controllers.Devices
             });
         }
 
-        [HttpDelete("/devices/raspberry/{id}")]
+        [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {
             if (int.TryParse(id, out int num))
@@ -89,7 +92,7 @@ namespace ErpBackend.Controllers.Devices
             }
         }
 
-        [HttpPost("/devices/raspberry/{id}/status")]
+        [HttpPost("{id}/status")]
         public IActionResult UpdateStatus([FromBody] JsonDocument json, string id)
         {
             return Json(new
@@ -98,7 +101,7 @@ namespace ErpBackend.Controllers.Devices
             });
         }
 
-        [HttpGet("/devices/raspberry/{id}/status")]
+        [HttpGet("{id}/status")]
         public IActionResult GetStatus(string id)
         {
             return Json(new
