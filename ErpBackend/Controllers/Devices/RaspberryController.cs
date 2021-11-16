@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using ErpBackend.Models;
 using ErpBackend.Repository;
@@ -32,25 +33,30 @@ namespace ErpBackend.Controllers.Devices
             return repository.Get().ToArray();
         }
 
+        [HttpGet("/devices/raspberry/{id}")]
+        public RaspberryModel Get(string id)
+        {
+            _logger.Log(LogLevel.Trace, "hgahaha");
+            return repository.Get().FirstOrDefault(data => data.Uuid == id) ?? new RaspberryModel();
+        }
+
+        [HttpPost("/devices/raspberry")]
+        public IActionResult eeeee([FromBody] JsonDocument json)
+        {
+            return Json(new
+            {
+                result = "wowowow!"
+            });
+        }
+
         [HttpPut("/devices/raspberry/{id}")]
-        public IActionResult Post(string id)
+        public IActionResult Post([FromBody] JsonDocument json, string id)
         {
             return Json(new
             {
                 result = id
             });
         }
-
-        [HttpPost("/devices/raspberry")]
-        public IActionResult eeeee(string json)
-        {
-            //Request.BodyReader.
-            return Json(new
-            {
-                result = json
-            });
-        }
-
 
         [HttpDelete("/devices/raspberry/{id}")]
         public IActionResult Delete(string id)
@@ -82,5 +88,25 @@ namespace ErpBackend.Controllers.Devices
                 });
             }
         }
+
+        [HttpPost("/devices/raspberry/{id}/status")]
+        public IActionResult UpdateStatus([FromBody] JsonDocument json, string id)
+        {
+            return Json(new
+            {
+                result = true
+            });
+        }
+
+        [HttpGet("/devices/raspberry/{id}/status")]
+        public IActionResult GetStatus(string id)
+        {
+            return Json(new
+            {
+                result = true
+            });
+        }
+
+
     }
 }
