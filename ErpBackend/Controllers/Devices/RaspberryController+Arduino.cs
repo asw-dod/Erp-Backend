@@ -6,7 +6,7 @@ namespace ErpBackend.Controllers.Devices
 {
     public partial class RaspberryController : Controller
     {
-        [HttpPost("/devices/raspberry/{id}/arduino")]
+        [HttpPost("{id}/arduino")]
         public IActionResult PostArduino([FromBody] JsonDocument json, string id)
         {
             return Json(new
@@ -24,7 +24,7 @@ namespace ErpBackend.Controllers.Devices
             });
         }
 
-        [HttpDelete("/devices/raspberry/{id}/arduino")]
+        [HttpDelete("{id}/arduino")]
         public IActionResult DeleteArduino([FromBody] JsonDocument json, string id)
         {
             return Json(new
@@ -33,7 +33,7 @@ namespace ErpBackend.Controllers.Devices
             });
         }
 
-        [HttpGet("/devices/raspberry/{id}/arduino/status")]
+        [HttpGet("{id}/arduino/status")]
         public IActionResult GetArduinoStatus(string id)
         {
             return Json(new
