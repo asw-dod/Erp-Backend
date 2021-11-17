@@ -8,12 +8,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ErpBackend.Controllers.Resources
 {
+    [ApiController]
+    [Route("/resources")]
     public class ResourcesController : Controller
     {
-        // GET: /<controller>/
-        public IActionResult Index()
+        [HttpGet("images/{id}")]
+        public IActionResult images(string id)
         {
-            return View();
+            return Json(new { result = id });
         }
     }
 }

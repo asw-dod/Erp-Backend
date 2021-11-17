@@ -28,8 +28,6 @@ namespace ErpBackend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-
             // Replace with your connection string.
             var connectionString = "Server=127.0.0.1;Port=6000;Database=erp;User=root;Password=test1234;sslMode=None;";
 
@@ -38,13 +36,9 @@ namespace ErpBackend
             // Alternatively, use 'ServerVersion.AutoDetect(connectionString)'.
             // For common usages, see pull request #1233.
             var serverVersion = new MySqlServerVersion(new Version(8, 0, 26));
-
             services.AddDbContext<ErpContext>(option => option.UseMySql(connectionString, serverVersion));
-
-
             services.AddControllers();
         }
-
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -56,17 +50,18 @@ namespace ErpBackend
             else
             {
                 app.UseExceptionHandler("/error");
-                app.Use(async (context, next) =>
-                {
-                    await next();
-                    if (context.Response.StatusCode == 404)
-                    {
-                        context.Request.Path = "/error";
-                        await next();
-                    }
-                });
             }
 
+            app.Use(async (context, next) =>
+            {
+                await next();
+                if (context.Response.StatusCode == 404)
+                {
+                    context.Request.Path = "/error";
+                    context.Request.Method = "GET";
+                    await next();
+                }
+            });
             app.UseRouting();
             app.UseAuthorization();
 

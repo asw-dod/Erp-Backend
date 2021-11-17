@@ -15,8 +15,7 @@ namespace ErpBackend.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            
-            return Json(new { result = true, error = "ㄱㅡㄱㅓㅅㅡㄴ ㅈㅏㄹㅁㅗㅅㄷㅗㅐㅁ.!" });
+            return Json(new { result = true, error = "와! 이것은 진심입니다!" });
         }
     }
 }
